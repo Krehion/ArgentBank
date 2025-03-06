@@ -1,0 +1,21 @@
+# Node.js
+node_modules/
+
+# Build output
+/dist
+
+# Logs
+*.log
+
+# Local environment files
+.env
+
+# VS Code settings
+.vscode/
+
+# Docker
+.dockerignore
+Dockerfile
+
+# Yarn
+yarn.lock
