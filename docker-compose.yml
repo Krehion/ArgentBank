@@ -8,6 +8,7 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    restart: unless-stopped # Ensures MongoDB stays up
 
   backend:
     build: ./ArgentBank-back
@@ -20,7 +21,9 @@ services:
       - MONGODB_URI=mongodb://mongo:27017/argentBank
     volumes:
       - ./ArgentBank-back:/app
+      - /app/node_modules/ # Prevents overwriting node_modules
     command: ["npm", "run", "dev:server"]
+    restart: unless-stopped # Ensures backend stays up
 
   frontend:
     build: ./ArgentBank-front
@@ -31,7 +34,13 @@ services:
       - "3000:3000"
     volumes:
       - ./ArgentBank-front:/app
-    command: ["npm", "run", "dev"]
+      - /app/node_modules/ # Prevents overwriting node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true
+    command: ["yarn", "dev"]
+    restart: unless-stopped # Ensures frontend stays up
 
 volumes:
   mongo_data:
