@@ -13,9 +13,8 @@ node_modules/
 # VS Code settings
 .vscode/
 
-# Docker
+# Docker build artifacts
 .dockerignore
-Dockerfile
 
 # Yarn
-yarn.lock
+yarn-error.log
