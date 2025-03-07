@@ -1,8 +1,11 @@
+import Nav from "../../components/nav/Nav";
+
 const Index = () => {
 	return (
-		<div>
-			<p>Prout</p>
-		</div>
+		<>
+			<Nav />
+			<div>Prout</div>
+		</>
 	);
 };
 

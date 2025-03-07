@@ -1,0 +1,17 @@
+@import "../base/_variables.scss";
+
+.main-nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px 20px;
+
+	&--logo img {
+		max-width: 200px;
+	}
+
+	&--item {
+		font-weight: bold;
+		color: $grey-blue;
+	}
+}
