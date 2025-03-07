@@ -1,0 +1,23 @@
+.hero {
+	height: 400px;
+	background-image: url(../../assets/bank-tree.jpeg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 0% 33%;
+	position: relative;
+
+	&--content {
+		width: 300px;
+		position: absolute;
+		top: 50px;
+		right: 50px;
+		margin: 2rem;
+		padding: 2rem;
+		background: white;
+
+		p {
+			font-size: 1.2rem;
+			margin-top: 18px;
+		}
+	}
+}
