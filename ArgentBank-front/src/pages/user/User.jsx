@@ -1,8 +1,15 @@
+import Nav from "../../components/nav/Nav";
+import Footer from "../../components/footer/Footer";
+
 const User = () => {
 	return (
-		<div>
-			<p>Prout</p>
-		</div>
+		<>
+			<Nav />
+			<div>
+				<p>Prout</p>
+			</div>
+			<Footer />
+		</>
 	);
 };
 
