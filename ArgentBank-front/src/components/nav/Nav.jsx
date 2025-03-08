@@ -7,13 +7,13 @@ import "../../style/components/_nav.scss";
 export default function Nav() {
 	return (
 		<nav className="main-nav">
-			<NavLink to={""} className={"main-nav--logo"}>
+			<NavLink to={"/"} className={"main-nav--logo"}>
 				<img src={logo} />
 			</NavLink>
 			<div className="main-nav--items-container">
-				<div className="main-nav--item">
+				<NavLink to={"sign-in"} className="main-nav--item">
 					<FontAwesomeIcon icon={faCircleUser} /> Sign in
-				</div>
+				</NavLink>
 			</div>
 		</nav>
 	);
