@@ -1,0 +1,28 @@
+.feature {
+	display: flex;
+
+	&--item {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 40px;
+	}
+
+	&--icon {
+		width: 100px;
+		border: 10px solid #00bc77;
+		border-radius: 50%;
+		padding: 1rem;
+	}
+
+	&--slogan {
+		font-size: 1.25rem;
+		font-weight: bold;
+		margin: 1.5rem 0 1rem 0;
+	}
+
+	&--text {
+		text-align: center;
+	}
+}
