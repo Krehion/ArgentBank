@@ -1,0 +1,50 @@
+@import "../base/_variables.scss";
+
+.signin {
+	background-color: white;
+	box-sizing: border-box;
+	width: 300px;
+	margin: 3rem auto 0 auto;
+	padding: 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: $grey-blue;
+
+	h1 {
+		margin: 16px 0;
+	}
+
+	&--form {
+		width: 100%;
+
+		&--input-wrapper {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 1rem;
+
+			label {
+				font-weight: bold;
+			}
+
+			input {
+				padding: 5px;
+			}
+		}
+
+		&--input-remember label {
+			margin-left: 0.5rem;
+		}
+
+		&--btn {
+			margin-top: 1rem;
+			width: 100%;
+			padding: 8px;
+			background-color: $green;
+			border: none;
+			color: white;
+			font-weight: bold;
+			font-size: 1.1rem;
+		}
+	}
+}
