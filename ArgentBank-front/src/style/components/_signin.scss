@@ -45,6 +45,15 @@
 			color: white;
 			font-weight: bold;
 			font-size: 1.1rem;
+
+			&:hover {
+				cursor: pointer;
+			}
 		}
+	}
+
+	&--error {
+		color: #e60d04;
+		margin-top: 10px;
 	}
 }
