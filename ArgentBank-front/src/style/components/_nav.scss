@@ -14,5 +14,10 @@
 		font-weight: bold;
 		color: $grey-blue;
 		text-decoration: none;
+		margin-left: 0.8rem;
+
+		&:hover {
+			cursor: pointer;
+		}
 	}
 }
