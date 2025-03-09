@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/authSlice";
 
 const API_URL = "http://localhost:3001/api/v1/user/profile";
 
@@ -7,11 +9,11 @@ import Footer from "../../components/footer/Footer";
 import "../../style/components/_user.scss";
 
 const User = () => {
-	const [user, setUser] = useState(null);
+	const dispatch = useDispatch();
+	const { user, token } = useSelector((state) => state.auth);
 
 	useEffect(() => {
 		const fetchUserProfile = async () => {
-			const token = localStorage.getItem("token");
 			if (!token) return; // Ensure there's a token before sending the request
 
 			try {
@@ -28,14 +30,14 @@ const User = () => {
 					throw new Error(data.message || "Failed to fetch profile");
 				}
 
-				setUser(data.body); // Set the user data if the response is successful
+				dispatch(setUser(data.body)); // Store user in Redux
 			} catch (error) {
 				console.error("Profile fetch error:", error);
 			}
 		};
 
 		fetchUserProfile();
-	}, []);
+	}, [token, dispatch]);
 
 	if (!user) return <p>Loading...</p>;
 
