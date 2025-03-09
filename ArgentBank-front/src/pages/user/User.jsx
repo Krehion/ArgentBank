@@ -13,9 +13,9 @@ const User = () => {
 	const { user, token } = useSelector((state) => state.auth);
 
 	useEffect(() => {
-		const fetchUserProfile = async () => {
-			if (!token) return; // Ensure there's a token before sending the request
+		if (!token) return;
 
+		const fetchUserProfile = async () => {
 			try {
 				const response = await fetch(API_URL, {
 					method: "POST",
@@ -26,11 +26,9 @@ const User = () => {
 				});
 
 				const data = await response.json();
-				if (!response.ok) {
-					throw new Error(data.message || "Failed to fetch profile");
-				}
+				if (!response.ok) throw new Error(data.message || "Failed to fetch profile");
 
-				dispatch(setUser(data.body)); // Store user in Redux
+				dispatch(setUser(data.body));
 			} catch (error) {
 				console.error("Profile fetch error:", error);
 			}

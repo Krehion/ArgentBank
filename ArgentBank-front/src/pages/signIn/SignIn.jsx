@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "../../redux/authSlice";
 import { login } from "../../services/authService";
 
 import Nav from "../../components/nav/Nav";
@@ -12,17 +14,19 @@ const SignIn = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState(null);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setError(null);
+		setError(null); // Reset error before new attempt
 
 		try {
-			await login(email, password);
-			navigate("/user"); // Redirect on successful login
+			const token = await login(email, password);
+			dispatch(setToken(token)); // Store token in Redux
+			navigate("/user"); // Navigate after setting the token
 		} catch (err) {
-			setError(err.message);
+			setError(err.message); // Store error message if login fails
 		}
 	};
 
@@ -36,7 +40,7 @@ const SignIn = () => {
 					<form className="signin--form" onSubmit={handleSubmit}>
 						<div className="signin--form--input-wrapper">
 							<label htmlFor="email">E-mail</label>
-							<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+							<input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 						</div>
 						<div className="signin--form--input-wrapper">
 							<label htmlFor="password">Password</label>
