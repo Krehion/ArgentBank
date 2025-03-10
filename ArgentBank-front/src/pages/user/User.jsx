@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/authSlice";
 
@@ -11,6 +11,7 @@ import "../../style/components/_user.scss";
 const User = () => {
 	const dispatch = useDispatch();
 	const { user, token } = useSelector((state) => state.auth);
+	const [isEditing, setIsEditing] = useState(false);
 
 	useEffect(() => {
 		if (!token) return;
@@ -46,9 +47,30 @@ const User = () => {
 				<div className="user--welcome">
 					<h1>
 						Welcome back <br />
-						{user.firstName} {user.lastName}!
+						<span className="user--edit--name" style={{ display: isEditing ? "none" : "block" }}>
+							{user.firstName} {user.lastName}!
+						</span>
 					</h1>
-					<button>Edit name</button>
+					<button
+						className="user--welcome--btn user--edit--name"
+						onClick={() => setIsEditing(true)}
+						style={{ display: isEditing ? "none" : "block" }}>
+						Edit name
+					</button>
+					<form className="user--edit--form" style={{ display: isEditing ? "flex" : "none" }}>
+						<div>
+							<input type="text" placeholder={user.firstName}></input>
+							<input type="text" placeholder={user.lastName}></input>
+						</div>
+						<div>
+							<button type="submit" className="user--edit--form--btn">
+								Save
+							</button>
+							<button type="button" className="user--edit--form--btn" onClick={() => setIsEditing(false)}>
+								Cancel
+							</button>
+						</div>
+					</form>
 				</div>
 				<div className="user--account">
 					<div className="user--account--wrapper">

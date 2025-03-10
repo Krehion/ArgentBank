@@ -2,15 +2,18 @@
 
 .user {
 	&--welcome {
-		color: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		text-align: center;
+		color: white;
 		margin-bottom: 2rem;
 
 		h1 {
 			margin: 1.2rem 0;
 		}
 
-		button {
+		&--btn {
 			padding: 8px 10px;
 			background-color: $green;
 			border: none;
@@ -19,6 +22,36 @@
 
 			&:hover {
 				cursor: pointer;
+			}
+		}
+	}
+
+	&--edit {
+		&--form {
+			flex-direction: column;
+			gap: 10px;
+
+			div {
+				display: flex;
+				justify-content: center;
+				gap: 10px;
+			}
+
+			input {
+				padding: 5px;
+			}
+
+			&--btn {
+				padding: 8px 0;
+				width: 70px;
+				background-color: #005632;
+				border: none;
+				color: white;
+				font-weight: bold;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
 	}
