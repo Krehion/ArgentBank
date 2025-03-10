@@ -12,6 +12,8 @@ const User = () => {
 	const dispatch = useDispatch();
 	const { user, token } = useSelector((state) => state.auth);
 	const [isEditing, setIsEditing] = useState(false);
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 
 	useEffect(() => {
 		if (!token) return;
@@ -30,6 +32,8 @@ const User = () => {
 				if (!response.ok) throw new Error(data.message || "Failed to fetch profile");
 
 				dispatch(setUser(data.body));
+				setFirstName(data.body.firstName);
+				setLastName(data.body.lastName);
 			} catch (error) {
 				console.error("Profile fetch error:", error);
 			}
@@ -37,6 +41,35 @@ const User = () => {
 
 		fetchUserProfile();
 	}, [token, dispatch]);
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		const updatedName = {
+			firstName: firstName.trim() || user.firstName,
+			lastName: lastName.trim() || user.lastName
+		};
+
+		try {
+			const response = await fetch(API_URL, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`
+				},
+				body: JSON.stringify(updatedName)
+			});
+
+			const data = await response.json();
+			if (!response.ok) throw new Error(data.message || "Failed to update profile");
+
+			// Update Redux state with new user data
+			dispatch(setUser(data.body));
+			setIsEditing(false);
+		} catch (error) {
+			console.error("Profile update error:", error);
+		}
+	};
 
 	if (!user) return <p>Loading...</p>;
 
@@ -57,10 +90,10 @@ const User = () => {
 						style={{ display: isEditing ? "none" : "block" }}>
 						Edit name
 					</button>
-					<form className="user--edit--form" style={{ display: isEditing ? "flex" : "none" }}>
+					<form className="user--edit--form" style={{ display: isEditing ? "flex" : "none" }} onSubmit={handleSubmit}>
 						<div>
-							<input type="text" placeholder={user.firstName}></input>
-							<input type="text" placeholder={user.lastName}></input>
+							<input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+							<input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
 						</div>
 						<div>
 							<button type="submit" className="user--edit--form--btn">
