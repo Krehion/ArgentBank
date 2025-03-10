@@ -6,6 +6,11 @@
 	justify-content: space-between;
 	padding: 5px 20px;
 
+	@media only screen and (max-width: $bp-phone) {
+		flex-direction: column;
+		justify-content: center;
+	}
+
 	&--logo img {
 		max-width: 200px;
 	}

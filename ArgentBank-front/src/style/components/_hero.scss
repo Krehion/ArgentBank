@@ -1,19 +1,33 @@
+@import "../base/_variables.scss";
+
 .hero {
-	height: 400px;
+	min-height: 400px;
 	background-image: url(../../assets/bank-tree.jpeg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: 0% 33%;
 	position: relative;
 
+	@media only screen and (max-width: $bp-phone) {
+		min-height: fit-content;
+	}
+
 	&--content {
-		width: 300px;
+		max-width: 300px;
 		position: absolute;
 		top: 50px;
 		right: 50px;
 		margin: 2rem;
 		padding: 2rem;
 		background: white;
+
+		@media only screen and (max-width: $bp-phone) {
+			position: relative;
+			top: auto;
+			right: auto;
+			margin: 2rem auto;
+			width: 50%;
+		}
 
 		p {
 			font-size: 1.2rem;

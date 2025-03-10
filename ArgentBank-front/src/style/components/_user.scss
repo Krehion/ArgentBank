@@ -65,6 +65,11 @@
 		padding: 1.5rem;
 		margin: 0 auto 2rem auto;
 
+		@media only screen and (max-width: $bp-phone) {
+			flex-direction: column;
+			text-align: center;
+		}
+
 		&--title {
 			font-size: 1rem;
 		}
@@ -84,6 +89,10 @@
 
 			&:hover {
 				cursor: pointer;
+			}
+
+			@media only screen and (max-width: $bp-phone) {
+				margin-top: 10px;
 			}
 		}
 	}
