@@ -1,13 +1,18 @@
 swagger: "2.0"
+
 info:
   title: Bank Argent API documentation
   description: Contains all available API endpoints in this codebase
   version: "1.0.0"
   termsOfService: "http://swagger.io/terms/"
+
 host: localhost:3001
+
 basePath: /api/v1
+
 schemes:
   - http
+
 paths:
   /user/login:
     post:
@@ -33,6 +38,7 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
+
   /user/signup:
     post:
       tags:
@@ -57,6 +63,7 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
+
   /user/profile:
     post:
       security:
@@ -110,11 +117,165 @@ paths:
           description: Invalid Fields
         "500":
           description: Internal Server Error
+
+  /accounts:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Account Module
+      summary: Get user accounts
+      description: Retrieve the list of accounts belonging to the authenticated user.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: List of user accounts
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Account"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+
+  /accounts/{account_id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Account Module
+      summary: Get account details
+      description: Retrieve detailed information about a specific account.
+      parameters:
+        - in: path
+          name: account_id
+          required: true
+          type: string
+          description: ID of the account
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Account details retrieved successfully
+          schema:
+            $ref: "#/definitions/Account"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Account not found
+        "500":
+          description: Internal Server Error
+
+  /accounts/{account_id}/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get transactions for an account
+      description: Retrieve all transactions for the given account in the current month.
+      parameters:
+        - in: path
+          name: account_id
+          required: true
+          type: string
+          description: ID of the account
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: List of transactions for the account
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Transaction"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Account not found
+        "500":
+          description: Internal Server Error
+
+  /accounts/{account_id}/transactions/{transaction_id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get transaction details
+      description: Retrieve details of a specific transaction.
+      parameters:
+        - in: path
+          name: account_id
+          required: true
+          type: string
+          description: ID of the account
+        - in: path
+          name: transaction_id
+          required: true
+          type: string
+          description: ID of the transaction
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction details retrieved successfully
+          schema:
+            $ref: "#/definitions/Transaction"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Update transaction details
+      description: Update user-specific details of a transaction (e.g., category, note).
+      parameters:
+        - in: path
+          name: account_id
+          required: true
+          type: string
+          description: ID of the account
+        - in: path
+          name: transaction_id
+          required: true
+          type: string
+          description: ID of the transaction
+        - in: body
+          name: body
+          description: Fields that can be updated (category, note)
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdate"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Transaction updated successfully
+          schema:
+            $ref: "#/definitions/Transaction"
+        "400":
+          description: Invalid request body
+        "401":
+          description: Unauthorized
+        "404":
+          description: Transaction not found
+        "500":
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
+
 definitions:
   User:
     properties:
@@ -130,6 +291,7 @@ definitions:
       lastName:
         type: string
         description: user last name
+
   Login:
     properties:
       email:
@@ -138,6 +300,7 @@ definitions:
       password:
         type: string
         description: user password
+
   ApiResponse:
     type: object
     properties:
@@ -152,11 +315,13 @@ definitions:
             type: string
           email:
             type: string
+
   LoginResponse:
     type: object
     properties:
       token:
         type: string
+
   UserProfile:
     type: object
     properties:
@@ -164,3 +329,60 @@ definitions:
         type: string
       lastName:
         type: string
+
+  Account:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Account ID
+      name:
+        type: string
+        description: Account name (e.g., "Checking Account")
+      balance:
+        type: number
+        format: float
+        description: Current account balance
+      currency:
+        type: string
+        description: Currency of the account (e.g., "USD")
+
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Transaction ID
+      date:
+        type: string
+        format: date-time
+        description: Date and time of the transaction
+      amount:
+        type: number
+        format: float
+        description: Transaction amount
+      currency:
+        type: string
+        description: Currency of the transaction
+      type:
+        type: string
+        description: Type of transaction (e.g., "Debit", "Credit")
+      category:
+        type: string
+        description: User-defined category (e.g., "Groceries", "Rent")
+      note:
+        type: string
+        description: Optional user-defined note
+      recipient:
+        type: string
+        description: Recipient or merchant name
+
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Updated transaction category
+      note:
+        type: string
+        description: Updated user note
